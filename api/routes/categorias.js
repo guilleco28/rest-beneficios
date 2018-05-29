@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const Beneficio = require('../models/beneficio');
+const Categoria = require('../models/categoria');
 
 router.get('/', (req, res, next) => {
     
-    Beneficio.find().select('-__v').exec().then((docs) => {
+    Categoria.find().select('-__v').exec().then((docs) => {
         console.log(docs);
         const response = {
             count: docs.length,
-            beneficios: docs
+            categorias: docs
         };
         res.status(200).json(response)
     }).catch((err) => {
@@ -20,23 +20,16 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const beneficio = new Beneficio({
+    const categoria = new Categoria({
         _id: new mongoose.Types.ObjectId(),
-        titulo: req.body.titulo,
-        descripcion: req.body.descripcion,
-        promocion: req.body.promocion,
-        locales: req.body.locales,
-        foto: req.body.foto,
-        categorias: req.body.categorias,
-        fch_inicio: req.body.fch_inicio,
-        fch_fin: req.body.fch_fin
+        nombre: req.body.nombre
     });
 
-    beneficio.save().then((result) => {
+    categoria.save().then((result) => {
         console.log(result);
         res.status(201).json({
-            message: 'El beneficio fue creado!',
-            beneficioCreado: beneficio
+            message: 'La categoria fue creada!',
+            categoriaCreada: categoria
         });
     }).catch((err) => {
         console.log(err);
@@ -45,14 +38,14 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-    const idBeneficio = req.params.id;
+    const idCategoria = req.params.id;
     
-    Beneficio.findById(idBeneficio).select('-__v').exec().then((doc) => {
+    Categoria.findById(idCategoria).select('-__v').exec().then((doc) => {
         console.log(doc);
         if (doc) {
             res.status(200).json(doc);
         } else {
-            res.status(404).json({ message: 'El id no esta asociado a ningun beneficio'})
+            res.status(404).json({ message: 'El id no esta asociado a ninguna categoria'})
         }
     }).catch((err) => {
         console.log(err);
@@ -61,14 +54,14 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.patch('/:id', (req, res, next) => {
-    const idBeneficio = req.params.id;
+    const idCategoria = req.params.id;
 
     const updateOps = {};
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
     }
 
-    Beneficio.update({_id: id}, { $set: updateOps }).exec().then((result) => {
+    Categoria.update({_id: id}, { $set: updateOps }).exec().then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
         console.log(err);
@@ -76,14 +69,14 @@ router.patch('/:id', (req, res, next) => {
     });
 
     res.status(200).json({
-        message: 'El beneficio de id = '+ idBeneficio + ' fue actualizado!'
+        message: 'La categoria de id = '+ idCategoria + ' fue actualizada!'
     });
 });
 
 router.delete('/:id', (req, res, next) => {
-    const idBeneficio = req.params.id;
+    const idCategoria = req.params.id;
 
-    Beneficio.remove({ _id: idBeneficio }).exec().then((result) => {
+    Categoria.remove({ _id: idCategoria }).exec().then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
         console.log(err);

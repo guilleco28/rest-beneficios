@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const beneficiosRoutes = require('./api/routes/beneficios');
+const empresasRoutes = require('./api/routes/empresas');
+const categoriasRoutes = require('./api/routes/categorias');
 const usuariosRoutes = require('./api/routes/usuarios');
 
 mongoose.connect('mongodb+srv://beneficiosum:beneficiosum@beneficios-um-rest-87dca.mongodb.net/test?retryWrites=false');
@@ -17,6 +19,8 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.header('Allow-Control-Allow-Origin', '*');
     res.header('Allow-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Origin','*');
+    
     if(req.method === 'OPTIONS') {
         res.header('Allow-Control-Allow-Methods', 'PUT, POST, GET, PATCH, DELETE');
         return res.status(200).json({});
@@ -24,9 +28,13 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // Rutas
 app.use('/beneficios', beneficiosRoutes);
+app.use('/empresas', empresasRoutes);
+app.use('/categorias', categoriasRoutes);
 app.use('/usuarios', usuariosRoutes);
+
 
 // Si la peticion pasa por todas las rutas
 app.use((req, res, next) => {

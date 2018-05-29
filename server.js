@@ -7,7 +7,7 @@ const server = http.createServer(app);
 
 server.listen(port, '192.168.43.69');
 
-/*
+/* lo del mail
 var api_key = 'key-c2756a1f00f4f70f394bdf10a529c2f7';
 var domain = 'sandboxfce0a2c4b1e64be8933ad6af7183624c.mailgun.org';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
