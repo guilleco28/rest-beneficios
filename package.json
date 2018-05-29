@@ -1,0 +1,30 @@
+{
+  "name": "rest-beneficios",
+  "version": "1.0.0",
+  "description": "Node.js RESTful API for Beneficios UM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "node",
+    "restful",
+    "api",
+    "beneficios",
+    "um"
+  ],
+  "author": "Bruno Camargo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongodb": "^3.0.8",
+    "mongoose": "^5.1.0",
+    "morgan": "^1.9.0",
+    "nodemailer": "^4.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  }
+}
