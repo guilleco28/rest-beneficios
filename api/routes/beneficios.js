@@ -1,11 +1,38 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './fotos');
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  }
+});
+
+const fileFilter = (req, res, cb) => {
+  // solo aceptar imagenes
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+}
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 2
+  },
+  fileFilter: fileFilter
+});
 
 const Beneficio = require('../models/beneficio');
 
 router.get('/', (req, res, next) => {
-    
+
     Beneficio.find().select('-__v').exec().then((docs) => {
         console.log(docs);
         const response = {
@@ -19,14 +46,14 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', upload.single('foto'), (req, res, next) => {
     const beneficio = new Beneficio({
         _id: new mongoose.Types.ObjectId(),
         titulo: req.body.titulo,
         descripcion: req.body.descripcion,
         promocion: req.body.promocion,
         locales: req.body.locales,
-        foto: req.body.foto,
+        foto: req.file.path,
         categorias: req.body.categorias,
         fch_inicio: req.body.fch_inicio,
         fch_fin: req.body.fch_fin
@@ -46,7 +73,7 @@ router.post('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     const idBeneficio = req.params.id;
-    
+
     Beneficio.findById(idBeneficio).select('-__v').exec().then((doc) => {
         console.log(doc);
         if (doc) {

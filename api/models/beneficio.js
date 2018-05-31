@@ -5,10 +5,10 @@ const beneficiosSchema = mongoose.Schema({
     titulo: { type: String, required: true },
     descripcion: { type: String, required: true },
     promocion: { type: String, required: false},
-    locales: { type: Array, required: true },
+    locales: { type: Array, required: false },
     foto: { type: String, required: true },
-    categorias: { type: Array, required: true },
-    fch_inicio: { type: JSON, required: true},
+    categorias: { type: Array, required: false },
+    fch_inicio: { type: JSON, required: false},
     fch_fin: { type: JSON, required: false}
 });
 
