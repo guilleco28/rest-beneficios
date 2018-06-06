@@ -13,6 +13,7 @@ const mailRoutes = require('./api/routes/mail');
 mongoose.connect('mongodb+srv://beneficiosum:beneficiosum@beneficios-um-rest-87dca.mongodb.net/test?retryWrites=false');
 
 app.use(morgan('dev'));
+app.use('/fotos', express.static('fotos'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -21,7 +22,7 @@ app.use((req, res, next) => {
     res.header('Allow-Control-Allow-Origin', '*');
     res.header('Allow-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.header('Access-Control-Allow-Origin','*');
-    
+
     if(req.method === 'OPTIONS') {
         res.header('Allow-Control-Allow-Methods', 'PUT, POST, GET, PATCH, DELETE');
         return res.status(200).json({});
