@@ -8,6 +8,7 @@ const beneficiosRoutes = require('./api/routes/beneficios');
 const empresasRoutes = require('./api/routes/empresas');
 const categoriasRoutes = require('./api/routes/categorias');
 const usuariosRoutes = require('./api/routes/usuarios');
+const mailRoutes = require('./api/routes/mail');
 
 mongoose.connect('mongodb+srv://beneficiosum:beneficiosum@beneficios-um-rest-87dca.mongodb.net/test?retryWrites=false');
 
@@ -34,6 +35,7 @@ app.use('/beneficios', beneficiosRoutes);
 app.use('/empresas', empresasRoutes);
 app.use('/categorias', categoriasRoutes);
 app.use('/usuarios', usuariosRoutes);
+app.use('/mail', mailRoutes);
 
 
 // Si la peticion pasa por todas las rutas

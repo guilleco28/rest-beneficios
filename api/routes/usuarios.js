@@ -41,4 +41,18 @@ router.post('/', (req, res, next) => {
     });
 });
 
+router.get('/:mail', (req, res, next) => {
+    Usuario.find({mail: req.params.mail}).select('-__v').exec().then((doc) => {
+        console.log(doc);
+        if (doc) {
+            res.status(200).json(doc);
+        } else {
+            res.status(404).json({ message: 'Error 404'})
+        }
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
